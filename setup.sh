@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Install additional packages
-apk --update add --no-cache docker htop socat
+apk --update add --no-cache docker htop socat go neovim vim
 
 # Enable openssh server
 rc-update add sshd default

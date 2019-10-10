@@ -1,7 +1,11 @@
 #!/bin/sh
 
+# Install additional packages
+apk --update add --no-cache docker htop socat
+
 # Enable openssh server
 rc-update add sshd default
+rc-update add docker default
 
 # Configure networking
 cat > /etc/network/interfaces <<-EOF

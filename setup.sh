@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Install additional packages
-apk --update add --no-cache docker htop socat go neovim vim
+apk --update add --no-cache docker htop socat go neovim vim git
 
 # Enable openssh server
 rc-update add sshd default
@@ -11,12 +11,15 @@ rc-update add docker default
 cat > /etc/network/interfaces <<-EOF
 iface lo inet loopback
 iface eth0 inet dhcp
+iface eth1 inet dhcp
 EOF
 
 ln -s networking /etc/init.d/net.lo
 ln -s networking /etc/init.d/net.eth0
+ln -s networking /etc/init.d/net.eth1
 
 rc-update add net.eth0 default
+rc-update add net.eth1 boot
 rc-update add net.lo boot
 
 # Create root ssh directory

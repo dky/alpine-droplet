@@ -30,7 +30,7 @@ chmod 700 /root/.ssh
 cat > /bin/do-init <<-EOF
 #!/bin/sh
 resize2fs /dev/vda
-wget -T 5 http://169.254.169.254/metadata/v1/hostname    -q -O /etc/hostname
+wget -T 5 http://169.254.169.254/metadata/v1/hostname -q -O /etc/hostname
 wget -T 5 http://169.254.169.254/metadata/v1/public-keys -q -O /root/.ssh/authorized_keys
 hostname -F /etc/hostname
 chmod 600 /root/.ssh/authorized_keys

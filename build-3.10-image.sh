@@ -1,5 +1,5 @@
 #!/bin/sh
-FILENAME=alpine-do-virt-$(date +%Y-%m-%d-%H:%M)
+FILENAME=alpine-do-virt-$(date +%Y-%m-%d)
 
 git submodule update --init --recursive
 

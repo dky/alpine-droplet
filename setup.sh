@@ -26,11 +26,15 @@ chmod 700 /root/.ssh
 cat > /bin/do-init <<-EOF
 #!/bin/sh
 resize2fs /dev/vda
-wget -T 5 http://169.254.169.254/metadata/v1/hostname -q -O /etc/hostname
-wget -T 5 http://169.254.169.254/metadata/v1/public-keys -q -O /root/.ssh/authorized_keys
-hostname -F /etc/hostname
-chmod 600 /root/.ssh/authorized_keys
-rc-update del do-init default
+wget -T 5 http://169.254.169.254/metadata/v1/hostname -q -O /etc/hostname && hostname -F /etc/hostname
+wget -T 5 http://169.254.169.254/metadata/v1/public-keys -q -O /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys
+if rc-status default |grep -i do-init
+then
+       echo "Removing service from default runlevel"
+       rc-update del do-init default
+else
+       echo "Service not in default runlevel"
+fi
 exit 0
 EOF
 
@@ -42,7 +46,6 @@ depend() {
 }
 command="/bin/do-init"
 command_args=""
-pidfile="/tmp/do-init.pid"
 EOF
 
 # Make do-init and service executable
